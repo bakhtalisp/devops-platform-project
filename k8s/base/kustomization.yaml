@@ -1,0 +1,3 @@
+resources:
+  - api-service-deployment.yaml
+  - worker-service-deployment.yaml
