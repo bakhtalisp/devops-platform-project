@@ -44,7 +44,7 @@ metadata:
 spec:
   selector:
     app: api-service
-    version: blue
+    version: green
   ports:
     - port: 5000
       targetPort: 5000
