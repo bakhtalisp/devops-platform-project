@@ -1,3 +1,4 @@
 resources:
   - api-service-deployment.yaml
+  - api-service-green-deployment.yaml
   - worker-service-deployment.yaml
