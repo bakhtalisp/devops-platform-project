@@ -38,7 +38,7 @@ jobs:
         run: docker build -t worker-service:ci -f services/worker-service/Dockerfile services/worker-service
 
       - name: Run Trivy vulnerability scan (api-service)
-        uses: aquasecurity/trivy-action@0.24.0
+        uses: aquasecurity/trivy-action@master
         with:
           image-ref: "api-service:ci"
           format: "table"
@@ -46,7 +46,7 @@ jobs:
           exit-code: "0"
 
       - name: Run Trivy vulnerability scan (worker-service)
-        uses: aquasecurity/trivy-action@0.24.0
+        uses: aquasecurity/trivy-action@master
         with:
           image-ref: "worker-service:ci"
           format: "table"
