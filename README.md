@@ -10,6 +10,10 @@ A self-healing, GitOps-driven Kubernetes deployment platform demonstrating core 
     <img src="docs/banner.png" alt="Architecture & Workflow" width="100%">
 </p>
 
+<p align="center">
+  <img src="docs/banner2.png" alt="Architecture & Workflow Diagram" width="100%">
+</p>
+
 ---
 
 ## Overview
