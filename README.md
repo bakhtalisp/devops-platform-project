@@ -6,6 +6,10 @@ A self-healing, GitOps-driven Kubernetes deployment platform demonstrating core 
 
 🔗 **Repo:** [github.com/bakhtalisp/devops-platform-project](https://github.com/bakhtalisp/devops-platform-project)
 
+<p align="center">
+    <img src="docs/banner.png" alt="Architecture & Workflow" width="100%">
+</p>
+
 ---
 
 ## Overview
