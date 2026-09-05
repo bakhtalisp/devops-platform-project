@@ -1,8 +1,8 @@
-# SETUP.md — Run `devops-platform-project` Locally
+# SETUP.md: Run `devops-platform-project` Locally
 
 > Note: tool versions below are **recommended minimums**, not a record of exactly what
 > was used originally (that detail wasn't preserved). File paths follow the documented
-> repo structure — adjust if your actual filenames differ slightly.
+> repo structure: adjust if your actual filenames differ slightly.
 
 ---
 
@@ -15,7 +15,7 @@
 | kind | 0.20+ | Local Kubernetes cluster |
 | Helm | 3.13+ | Monitoring stack install |
 | Terraform | 1.6+ | AWS demo only (provider pinned to `6.62.0` in existing lockfile) |
-| ArgoCD CLI | 2.9+ | GitOps sync (optional — UI/kubectl also work) |
+| ArgoCD CLI | 2.9+ | GitOps sync (optional UI/kubectl also work) |
 | AWS CLI | v2 | Only needed for the optional Terraform demo |
 | Git | any recent | Clone + commit (ArgoCD source of truth) |
 
@@ -103,7 +103,7 @@ Never commit these. `.gitignore` already covers `*.secret.yaml` and `.env`.
 kubectl apply -k k8s/overlays/dev
 kubectl get pods -n dev -w
 ```
-Watch for `worker-service` — its initContainer does an `nc` port-check against
+Watch for `worker-service`; its initContainer does an `nc` port check against
 `api-service`, so it will stay `Init` until `api-service` is `Running`. This is
 expected (deploy-order dependency), not a failure.
 
@@ -140,7 +140,7 @@ argocd app get devops-platform
 
 `selfHeal: true` + auto-prune means ArgoCD will now auto-correct any drift.
 **Important:** any `kubectl edit`/`scale` done manually will be reverted unless
-it's committed to Git first — Git is the source of truth.
+it's committed to Git first Git is the source of truth.
 
 ---
 
@@ -150,8 +150,8 @@ it's committed to Git first — Git is the source of truth.
 kubectl get deployments -n dev -l app=api-service
 kubectl get svc api-service -n dev -o yaml | grep -A3 selector
 ```
-To switch live traffic blue → green: change the `version` label in the Service
-selector in the manifest, commit, push — ArgoCD picks it up automatically.
+To switch live traffic from blue → green: change the `version` label in the Service
+selector in the manifest, commit, push; ArgoCD picks it up automatically.
 
 ---
 
@@ -171,7 +171,7 @@ kubectl get svc -n monitoring   # confirm actual service names before port-forwa
 
 ## 11. Ports & Local Access
 
-Kind clusters aren't reachable externally by default — everything below uses
+Kind clusters aren't reachable externally by default; everything below uses
 `kubectl port-forward`. Given the two-terminal-tab / limited RAM constraint,
 run these in the background with `&`:
 
@@ -187,12 +187,12 @@ Grafana login: `admin` / the password you set in `grafana-admin-secret`.
 
 ---
 
-## 12. Prerequisite Env Vars / Config Files — Summary
+## 12. Prerequisite Env Vars / Config Files Summary
 
 | Item | Type | Notes |
 |---|---|---|
 | kubeconfig | auto-managed | `kind create cluster` sets context `kind-devops-platform` automatically |
-| `grafana-admin-secret` | K8s Secret | Must be created manually before Helm install (Step 5) — not in Git |
+| `grafana-admin-secret` | K8s Secret | Must be created manually before Helm install (Step 5) not in Git |
 | `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY` / `AWS_SESSION_TOKEN` | shell env vars | Only for optional Terraform demo, temporary, never persisted |
 | `terraform.tfvars` (if present) | file | Keep out of Git if it holds anything sensitive |
 | `.env` / `*.secret.yaml` | files | Already `.gitignore`-excluded |
@@ -210,7 +210,7 @@ terraform apply
 terraform destroy
 cd -
 ```
-Note: EKS demo is intentionally skipped (provider version lock conflict —
+Note: EKS demo is intentionally skipped (provider version lock conflict: 
 constraint `~>5.0` vs. `6.62.0` already locked). VPC/EC2/S3 module is the
 proof point; Kind replaces EKS as the actual cluster layer.
 
@@ -226,7 +226,7 @@ kind delete cluster --name devops-platform
 
 - **ArgoCD keeps undoing my change** → you edited live cluster state without
   committing to Git. Commit + push first, then let ArgoCD sync.
-- **worker-service stuck in Init** → check `api-service` is `Running` first;
+- **worker-service stuck in Init** → check that `api-service` is `Running` first;
   the initContainer port-check depends on it.
 - **Port-forward dies when you switch terminal tabs** → always background it
   with `&` given the 2-tab WSL constraint; check with `jobs` and `kill %<n>` when done.
